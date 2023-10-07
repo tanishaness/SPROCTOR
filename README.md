@@ -1,2 +1,2 @@
 # SPROCTOR
-ML based smart monitor(API) for OFFLINE class to measure attention span of students during the lecture. Build using CV2 and YOLOV8
+ML based smart proctor for OFFLINE exam to measure cheat percentage of children . Build using CV2 and MediaPipe.
