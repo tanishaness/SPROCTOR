@@ -1,0 +1,33 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<h3>Ctrl+c Ctrl+v disabled</h3>
+<textarea class="no-copy-paste"></textarea>
+<br><br>
+<h3>Ctrl+c Ctrl+v allowed</h3>
+<textarea></textarea>
+
+<script type='text/javascript'>
+$(document).ready(function() {
+    var ctrlDown = false,
+        ctrlKey = 17,
+        cmdKey = 91,
+        vKey = 86,
+        cKey = 67;
+
+    $(document).keydown(function(e) {
+        if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
+    }).keyup(function(e) {
+        if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = false;
+    });
+
+    $(".no-copy-paste").keydown(function(e) {
+        if (ctrlDown && (e.keyCode == vKey || e.keyCode == cKey)) return false;
+    });
+    
+    // Document Ctrl + C/V 
+    $(document).keydown(function(e) {
+        if (ctrlDown && (e.keyCode == cKey)) console.log("Document catch Ctrl+C");
+        if (ctrlDown && (e.keyCode == vKey)) console.log("Document catch Ctrl+V");
+    });
+});
+
+</script>
