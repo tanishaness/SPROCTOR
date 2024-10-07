@@ -67,9 +67,6 @@ If you’re adding a new feature or fixing a bug, please include tests to ensure
 ## Documentation
 If your contribution changes how the package works, please update the relevant documentation. This includes updating comments, README files, and other markdown files as needed.
 
-## Code of Conduct
-Please note that this project is governed by a [Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
-
 ## Reporting Issues
 If you encounter any issues or have feature requests, please open an issue in the repository to discuss it.
 
