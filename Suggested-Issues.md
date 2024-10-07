@@ -6,3 +6,5 @@
 3. Enhance the data set and train it or use FSL-ZSL.
 
 4. Add the functionality to track multiple students at the same time as shown in image, as of 8 october 2024, it still tracks just one student
+
+5. Create and Connect a database for face data management and Excel Report generation.
