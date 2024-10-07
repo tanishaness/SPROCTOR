@@ -143,7 +143,13 @@ def pose():
         if cv2.waitKey(5) & 0xFF == 27:
             break
 
+        # check for if windows close button is clicked
+        if cv2.getWindowProperty('Head Pose Estimation',cv2.WND_PROP_VISIBLE)<1:
+            break
+
     cap.release()
+    cv2.destroyAllWindows()
+
 
 #############################
 if __name__ == "__main__":
