@@ -2,7 +2,7 @@
 
 ## Introduction
 
-SPROCTOR is an comprehensive platform that connects students, educators, and professionals to resources such as scholarships, job opportunities, and community discussions. By participating in this community, you agree to contribute positively and respectfully, fostering an environment that promotes inclusivity, learning, and collaboration.
+SPROCTOR is an AI-driven proctoring system designed to monitor offline exams and estimate the cheat percentage of students. It leverages cutting-edge computer vision techniques using OpenCV (CV2) and MediaPipe to detect and analyze suspicious behavior during examinations.
 
 ## Our Commitment
 
