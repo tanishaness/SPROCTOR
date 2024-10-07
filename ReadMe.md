@@ -10,7 +10,8 @@
 4. [How to Contribute to This Project](#how-to-contribute-to-this-project)
 5. [Contribution Points](#contribution-points)
 6. [GSSoC Guidelines](#gssoc-guidelines)
-7. [Ending Note](#ending-note)
+7. [Thanking Our Contributors](#thanking-our-contributors)
+8. [Ending Note](#ending-note)
 
 ---
 
@@ -55,6 +56,11 @@ We welcome contributions! Please refer to our [CONTRIBUTING.md](./CONTRIBUTING.m
 It is important to adhere to the guidelines; violations can affect your profile. Review the guidelines [here](https://github.com/GSSoC24/Contributor/tree/main/gssoc-guidelines).
 
 ---
+## 🎉Thanking Our Contributors
+
+<a href="https://github.com/tanishaness/SPROCTOR/pulse"> 
+  <img align="center" src="https://contrib.rocks/image?max=100&repo=tanishaness/SPROCTOR" /> 
+</a>
 
 ## ✨ Ending Note
 
