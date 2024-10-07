@@ -1,6 +1,7 @@
 # 🎓 SPROCTOR: ML-Based Smart Proctor for Offline Exams
 
-![GSSoC Extended]<img src="GSSoC-Ext.png">
+![GSSoC Extended]
+<img src="GSSoC-Ext.png">
 
 ## 📋 Table of Contents
 
@@ -19,7 +20,8 @@
 
 **SPROCTOR** is an AI-driven proctoring system designed to monitor offline exams and estimate the cheat percentage of students. It leverages cutting-edge computer vision techniques using OpenCV (CV2) and MediaPipe to detect and analyze suspicious behavior during examinations.
 
-![SPROCTOR Model]<img src="SPROCTOR Modle.webp">
+![SPROCTOR Model]
+<img src="modle.png">
 
 ---
 
