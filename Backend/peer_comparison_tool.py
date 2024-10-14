@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 
 class Student:
     def __init__(self, name, study_hours, participation_rate, assignment_completion):
@@ -72,6 +71,16 @@ def visualize_results(students, averages, outliers):
     plt.tight_layout()
     plt.show()
 
+def get_float_input(prompt, default_value):
+    while True:
+        try:
+            value = input(prompt)
+            if value.strip() == "":
+                return default_value
+            return float(value)
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
 def main():
     students = []
     
@@ -80,24 +89,29 @@ def main():
         name = input("Enter student name (or 'done' to finish): ")
         if name.lower() == 'done':
             break
-        study_hours = float(input("Enter study hours: "))
-        participation_rate = float(input("Enter participation rate (0-1): "))
-        assignment_completion = float(input("Enter assignment completion (0-1): "))
+            
+        study_hours = get_float_input("Enter study hours (default is 0): ", 0)
+        participation_rate = get_float_input("Enter participation rate (0-1, default is 0): ", 0)
+        assignment_completion = get_float_input("Enter assignment completion (0-1, default is 0): ", 0)
+        
         students.append(Student(name, study_hours, participation_rate, assignment_completion))
 
-    averages = calculate_averages(students)
-    outliers = identify_outliers(students, averages)
+    if students:
+        averages = calculate_averages(students)
+        outliers = identify_outliers(students, averages)
 
-    print("\nAverages:")
-    for key, value in averages.items():
-        print(f"{key}: {value:.2f}")
-    
-    print("\nOutliers:")
-    for name, behavior in outliers:
-        print(f"{name} is an outlier in {behavior}")
+        print("\nAverages:")
+        for key, value in averages.items():
+            print(f"{key}: {value:.2f}")
 
-    # Visualize results
-    visualize_results(students, averages, outliers)
+        print("\nOutliers:")
+        for name, behavior in outliers:
+            print(f"{name} is an outlier in {behavior}")
+
+        # Visualize results
+        visualize_results(students, averages, outliers)
+    else:
+        print("No student data entered.")
 
 if __name__ == "__main__":
     main()
