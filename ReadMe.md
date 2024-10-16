@@ -83,3 +83,7 @@ It is important to adhere to the guidelines; violations can affect your profile.
 Thank you for your interest in the **SPROCTOR** project! We believe that leveraging technology can significantly enhance the integrity of offline examinations. Your feedback and contributions are invaluable as we strive to improve this system further.
 
 Whether you're a developer, educator, or simply curious about the project, we welcome your insights and ideas! Feel free to reach out with any questions, suggestions, or collaboration opportunities. Together, we can make the examination process fairer and more transparent for students everywhere!
+
+## :key: License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
