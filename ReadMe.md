@@ -1,7 +1,29 @@
 # 🎓 SPROCTOR: ML-Based Smart Proctor for Offline Exams
 
-![GSSoC Extended]
-<img src="GSSoC-Ext.png">
+<table align="center">
+    <thead align="center">
+        <tr border: 2px;>
+            <td><b>🌟 Stars</b></td>
+            <td><b>🍴 Forks</b></td>
+            <td><b>🐛 Issues</b></td>
+            <td><b>🔔 Open PRs</b></td>
+            <td><b>🔕 Close PRs</b></td>
+        </tr>
+     </thead>
+    <tbody>
+         <tr>
+            <td><img alt="Stars" src="https://img.shields.io/github/stars/tanishaness/SPROCTOR?style=flat&logo=github"/></td>
+             <td><img alt="Forks" src="https://img.shields.io/github/forks/tanishaness/SPROCTOR?style=flat&logo=github"/></td>
+            <td><img alt="Issues" src="https://img.shields.io/github/issues/tanishaness/SPROCTOR?style=flat&logo=github"/></td>
+            <td><img alt="Open Pull Requests" src="https://img.shields.io/github/issues-pr/tanishaness/SPROCTOR?style=flat&logo=github"/></td>
+           <td><img alt="Close Pull Requests" src="https://img.shields.io/github/issues-pr-closed/tanishaness/SPROCTOR?style=flat&color=green&logo=github"/></td>
+        </tr>
+    </tbody>
+</table>
+
+<div align="center">
+  <img src="GSSoC-Ext.png" alt="gssoc">
+</div>
 
 ## 📋 Table of Contents
 
