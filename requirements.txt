@@ -28,3 +28,4 @@ scipy==1.14.1
 six==1.16.0
 sounddevice==0.5.0
 WMI==1.5.1
+tensor
