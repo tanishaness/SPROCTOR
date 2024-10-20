@@ -1,125 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Cheating Website Analysis</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Feedback | Academic Integrity</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="container">
+    <div class="feedback-form">
+      <h1>Academic Integrity Feedback</h1>
+      <p>We appreciate your feedback to improve our efforts in tracking academic dishonesty.</p>
 
-    <!-- Other content of the website -->
-
-    <footer>
-        <div class="footer-container">
-            <h2>Feedback Form</h2>
-            <p>Help us improve the analysis by providing your feedback on cheating incidents.</p>
-            <form class="feedback-form" action="#" method="post">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Your Name" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Your Email" required>
-
-                <label for="feedback">Your Feedback:</label>
-                <textarea id="feedback" name="feedback" rows="4" placeholder="Your feedback about cheating incidents or suggestions..." required></textarea>
-
-                <label for="rating">Rate the seriousness of cheating:</label>
-                <select id="rating" name="rating">
-                    <option value="1">1 - Not Serious</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5 - Very Serious</option>
-                </select>
-
-                <button type="submit">Submit Feedback</button>
-            </form>
+      <form action="#">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
         </div>
-    </footer>
 
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="Enter the subject" required>
+        </div>
+
+        <div class="form-group">
+          <label for="rating">Rate the System</label>
+          <select id="rating" required>
+            <option value="">Select rating</option>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Very Good</option>
+            <option value="3">3 - Good</option>
+            <option value="2">2 - Fair</option>
+            <option value="1">1 - Poor</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="comments">Feedback on the Cheating Detection System</label>
+          <textarea id="comments" rows="5" placeholder="Share your feedback or suggestions" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="improvement">Suggestions for Improvement</label>
+          <textarea id="improvement" rows="4" placeholder="How can we improve the system?" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
 </body>
 <style>
-    /* General Styles */
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f7f6;
+    * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-/* Feedback Form Container */
-.feedback-container {
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 30px;
+.container {
+  max-width: 600px;
   width: 100%;
-  max-width: 500px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  background-color: #fff;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.feedback-form {
   text-align: center;
 }
 
-/* Form Elements */
-h1 {
-  color: #333333;
+.feedback-form h1 {
+  color: #2c3e50;
+  font-size: 24px;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
-p {
-  color: #666666;
+.feedback-form p {
+  color: #7f8c8d;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.form-group {
   margin-bottom: 20px;
-  font-size: 14px;
-}
-
-form label {
-  display: block;
   text-align: left;
-  margin: 10px 0 5px;
-  font-weight: bold;
-  color: #333333;
 }
 
-form input, form select, form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: #f9f9f9;
+.form-group label {
+  font-weight: 500;
+  color: #34495e;
+  display: block;
+  margin-bottom: 6px;
 }
 
-form input:focus, form select:focus, form textarea:focus {
-  outline: none;
-  border: 1px solid #0d6efd;
-}
-
-form button {
+.form-group input,
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 12px;
-  background-color: #0d6efd;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  color: #34495e;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2980b9;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #2980b9;
   color: white;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 6px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-form button:hover {
-  background-color: #084298;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  .feedback-container {
-    padding: 20px;
-  }
+.submit-btn:hover {
+  background-color: #21618c;
 }
 
 </style>
