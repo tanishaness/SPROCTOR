@@ -1,7 +1,3 @@
-## Project Structure ✨
-
-<!-- START_STRUCTURE -->
-```
 ├── Assets/
 │   └── image.png
 ├── Backend/
@@ -261,5 +257,3 @@
 ├── heatmap_combined_20241009_144503.png
 ├── modle.png
 └── requirements.txt
-```
-<!-- END_STRUCTURE -->
