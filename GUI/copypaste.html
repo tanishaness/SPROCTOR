@@ -56,6 +56,10 @@ window.gtranslateSettings = {
       font-family: Arial, sans-serif;
       min-height: 100vh;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      color: #333;
       flex-direction: column;
     }
   
@@ -71,15 +75,38 @@ window.gtranslateSettings = {
       position: relative;
       width: 100%;
     }
-  
+   
+    textarea:focus {
+      outline: none;
+      border-color: #3498db;
+    }
+
+    .no-copy-paste {
+      background-color: #f8f9fa;
+    }
+
     footer a {
       color: #FFD700;
       margin: 0 10px;
       text-decoration: none;
     }
+
   
     footer a:hover {
       text-decoration: underline;
+    }
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
     }
   </style>
   </head>
