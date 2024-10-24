@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        :root {
+            --ikea-blue: #0058AB;
+            --ikea-yellow: #FBD914;
+            --ikea-gray: #F5F5F5;
+            --ikea-dark: #111111;
+            --ikea-text: #484848;
+        }
+
+        body {
+            background-color: var(--ikea-gray);
+            color: var(--ikea-text);
+            line-height: 1.5;
+        }
+
+        .top-banner {
+            background-color: var(--ikea-yellow);
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .navbar {
+            background: white;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            color: var(--ikea-blue);
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 24px;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 12px 16px;
+            margin: 4px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-menu li:hover {
+            background: var(--ikea-gray);
+        }
+
+        .sidebar-menu li.active {
+            background: var(--ikea-blue);
+            color: white;
+        }
+
+        .calendar-card {
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .calendar-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .calendar-controls {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 24px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--ikea-blue);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--ikea-gray);
+            color: var(--ikea-text);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+        }
+
+        .calendar-grid div {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-grid .header {
+            background: var(--ikea-gray);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ikea-text);
+        }
+
+        .calendar-grid .day {
+            background: white;
+            border: 1px solid var(--ikea-gray);
+        }
+
+        .calendar-grid .day:hover {
+            background: var(--ikea-gray);
+            transform: translateY(-2px);
+        }
+
+        .calendar-grid .today {
+            background: var(--ikea-blue);
+            color: white;
+            font-weight: 700;
+        }
+
+        .calendar-grid .has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            width: 4px;
+            height: 4px;
+            background: var(--ikea-yellow);
+            border-radius: 50%;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--ikea-blue);
+            margin-bottom: 8px;
+        }
+
+        .stat-card p {
+            color: var(--ikea-text);
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-banner">
+        New day, new month, fresh opportunities ahead!
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">Calendar</div>
+        <button class="btn btn-primary">
+            <i class="fas fa-user"></i>
+            Sign In
+        </button>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-grid">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li class="active">
+                        <i class="fas fa-calendar"></i>
+                        Calendar
+                    </li>
+                    <li>
+                        <i class="fas fa-tasks"></i>
+                        Tasks
+                    </li>
+                    <li>
+                        <i class="fas fa-users"></i>
+                        Team
+                    </li>
+                    <li>
+                        <i class="fas fa-chart-bar"></i>
+                        Analytics
+                    </li>
+                    <li>
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </li>
+                </ul>
+            </aside>
+
+            <main>
+                <div class="calendar-card">
+                    <div class="calendar-header">
+                        <div class="calendar-title">
+                            <h1>October 2024</h1>
+                            <p>Plan your month ahead</p>
+                        </div>
+                        <div class="calendar-controls">
+                            <button class="btn btn-secondary" onclick="prevMonth()">
+                                <i class="fas fa-chevron-left"></i>
+                                Previous
+                            </button>
+                            <button class="btn btn-secondary" onclick="nextMonth()">
+                                Next
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button class="btn btn-primary" onclick="openGoogleCalendar()">
+                                <i class="fas fa-plus"></i>
+                                New Event
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="header">Sun</div>
+                        <div class="header">Mon</div>
+                        <div class="header">Tue</div>
+                        <div class="header">Wed</div>
+                        <div class="header">Thu</div>
+                        <div class="header">Fri</div>
+                        <div class="header">Sat</div>
+
+                        <div class="day" onclick="openGoogleCalendar('2024-10-01')">1</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-02')">2</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-03')">3</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-04')">4</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-05')">5</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-06')">6</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-07')">7</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-08')">8</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-09')">9</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-10')">10</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-11')">11</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-12')">12</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-13')">13</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-14')">14</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-15')">15</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-16')">16</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-17')">17</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-18')">18</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-19')">19</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-20')">20</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-21')">21</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-22')">22</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-23')">23</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-24')">24</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-25')">25</div>
+                        <div class="day today" onclick="openGoogleCalendar('2024-10-26')">26</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-27')">27</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-28')">28</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-29')">29</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-30')">30</div>
+                        <div class="day" onclick="openGoogleCalendar('2024-10-31')">31</div>
+                    </div>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>12</h3>
+                        <p>Upcoming Events</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>4</h3>
+                        <p>Team Meetings</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>85%</h3>
+                        <p>Tasks Completed</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function openGoogleCalendar(date) {
+            const baseUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=`;
+            const endDate = new Date(date);
+            endDate.setDate(endDate.getDate() + 1);
+            const start = new Date(date).toISOString().replace(/-|:|\.\d\d\d/g, "");
+            const end = endDate.toISOString().replace(/-|:|\.\d\d\d/g, "");
+            const url = `${baseUrl}${start}/${end}&text=New%20Event`;
+            window.open(url, '_blank');
+        }
+
+        function prevMonth() {
+            // Logic to go to the previous month
+            alert('Previous month clicked');
+        }
+
+        function nextMonth() {
+            // Logic to go to the next month
+            alert('Next month clicked');
+        }
+    </script>
+</body>
+
+</html>
