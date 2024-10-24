@@ -25,6 +25,10 @@
   <img src="GSSoC-Ext.png" alt="gssoc">
 </div>
 
+## Project Structure ✨
+
+Check the project structure here [Project Structure](PROJECT_STRUCTURE.md)
+
 ## 📋 Table of Contents
 
 1. [Project Overview](#project-overview)
