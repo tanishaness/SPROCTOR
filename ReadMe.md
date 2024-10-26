@@ -104,6 +104,31 @@ It is important to adhere to the guidelines; violations can affect your profile.
   <img align="center" src="https://contrib.rocks/image?max=100&repo=tanishaness/SPROCTOR" /> 
 </a>
 
+<!--line-->
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
+
+## Stargazers ❤️
+
+<div align='left'>
+
+[![Stargazers repo roster for @tanishaness/SPROCTOR](https://reporoster.com/stars/dark/tanishaness/SPROCTOR)](https://github.com/tanishaness/SPROCTOR/stargazers)
+
+
+</div>
+
+## Forkers ❤️
+
+[![Forkers repo roster for @tanishaness/SPROCTOR](https://reporoster.com/forks/dark/tanishaness/SPROCTOR)](https://github.com/tanishaness/SPROCTOR/network/members)
+
+
+<!--line-->
+<img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
+
+
+
+
+
 ## ✨ Ending Note
 
 Thank you for your interest in the **SPROCTOR** project! We believe that leveraging technology can significantly enhance the integrity of offline examinations. Your feedback and contributions are invaluable as we strive to improve this system further.
