@@ -1,5 +1,5 @@
 # Backend/proctor_core.py
-
+# adding to a new branch 
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -119,3 +119,5 @@ class ProctorCore:
             self.logger.info("Cleanup completed successfully")
         except Exception as e:
             self.logger.error(f"Error during cleanup: {str(e)}")
+
+            

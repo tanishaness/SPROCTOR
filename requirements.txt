@@ -32,3 +32,5 @@ six==1.16.0
 pywin32==306
 WMI==1.5.1
 psutil>=5.9.0
+
+#adding to new branch
