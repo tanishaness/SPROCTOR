@@ -4,166 +4,87 @@ import tensorflow as tf
 import tensorflow_hub as hub
 
 # Load the SSD MobileNet V2 model from TensorFlow Hub
-detector = hub.load("https://www.kaggle.com/models/tensorflow/ssd-mobilenet-v2/TensorFlow2/fpnlite-320x320/1")
+def load_model():
+    try:
+        model = hub.load("https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2")
+        print("Model loaded successfully.")
+        return model
+    except Exception as e:
+        print("Error loading model:", e)
+        return None
 
-# Mapping class IDs to class names for COCO dataset
-class_names = {
-    1: 'person',
-    2: 'bicycle',
-    3: 'car',
-    4: 'motorcycle',
-    5: 'airplane',
-    6: 'bus',
-    7: 'train',
-    8: 'truck',
-    9: 'boat',
-    10: 'traffic light',
-    11: 'fire hydrant',
-    12: 'stop sign',
-    13: 'parking meter',
-    14: 'bench',
-    15: 'bird',
-    16: 'cat',
-    17: 'dog',
-    18: 'horse',
-    19: 'sheep',
-    20: 'cow',
-    21: 'elephant',
-    22: 'bear',
-    23: 'zebra',
-    24: 'giraffe',
-    25: 'backpack',
-    26: 'umbrella',
-    27: 'handbag',
-    28: 'tie',
-    29: 'suitcase',
-    30: 'frisbee',
-    31: 'skis',
-    32: 'snowboard',
-    33: 'sports ball',
-    34: 'kite',
-    35: 'baseball bat',
-    36: 'baseball glove',
-    37: 'skateboard',
-    38: 'surfboard',
-    39: 'tennis racket',
-    40: 'bottle',
-    41: 'wine glass',
-    42: 'cup',
-    43: 'fork',
-    44: 'knife',
-    45: 'spoon',
-    46: 'bowl',
-    47: 'banana',
-    48: 'apple',
-    49: 'sandwich',
-    50: 'orange',
-    51: 'broccoli',
-    52: 'carrot',
-    53: 'hot dog',
-    54: 'pizza',
-    55: 'donut',
-    56: 'cake',
-    57: 'chair',
-    58: 'couch',
-    59: 'potted plant',
-    60: 'bed',
-    61: 'dining table',
-    62: 'toilet',
-    63: 'TV',
-    64: 'laptop',
-    65: 'mouse',
-    66: 'remote',
-    67: 'keyboard',
-    68: 'cell phone',
-    69: 'microwave',
-    70: 'oven',
-    71: 'toaster',
-    72: 'sink',
-    73: 'refrigerator',
-    74: 'book',
-    75: 'clock',
-    76: 'vase',
-    77: 'scissors',
-    78: 'teddy bear',
-    79: 'hair drier',
-    80: 'toothbrush'
-}
+# Function to perform object detection on an image tensor
+def detect_objects(model, image):
+    # Resize and prepare image tensor
+    image_resized = cv2.resize(image, (320, 320))
+    input_tensor = tf.convert_to_tensor(image_resized, dtype=tf.uint8)
+    input_tensor = input_tensor[tf.newaxis, ...]
 
-# Function to perform object detection
-def detect_objects(image):
-    # Convert the image to a tensor and resize it
-    image_resized = cv2.resize(image, (320, 320))  # Resize to model input size
-    input_tensor = tf.convert_to_tensor(image_resized)
-    input_tensor = input_tensor[tf.newaxis, ...]  # Add batch dimension
+    # Run inference
+    return model(input_tensor)
 
-    # Perform inference
-    detector_output = detector(input_tensor)
+# Function to map detection class IDs to class names
+def get_class_name(class_id, class_names):
+    return class_names.get(class_id, "Unknown")
 
-    return detector_output
-
-def load_image(image_path):
-    # Load an image from a file path
-    image = cv2.imread(image_path)
-    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-def draw_boxes(image, boxes, class_ids, scores, threshold=0.5):
+# Draw bounding boxes and labels on the image
+def draw_boxes(image, boxes, class_ids, scores, class_names, threshold=0.5):
     height, width, _ = image.shape
-    found_items = []  # List to store found items
+    detected_items = []
 
     for i in range(len(scores)):
-        if scores[i] > threshold:
+        if scores[i] >= threshold:
             box = boxes[i]
-            (ymin, xmin, ymax, xmax) = box
-            # Scale bounding box to original image dimensions
+            ymin, xmin, ymax, xmax = box
             xmin = int(xmin * width)
             xmax = int(xmax * width)
             ymin = int(ymin * height)
             ymax = int(ymax * height)
+            
+            class_name = get_class_name(class_ids[i], class_names)
+            confidence = scores[i] * 100
 
-            # Get class name from class ID
-            class_name = class_names.get(class_ids[i], 'Unknown')
-
-            # Print class name and confidence score
-            print(f'Detected Class: {class_name}, Confidence: {scores[i] * 100:.2f}%')
-
-            # Check if the detected object is a laptop or a cell phone
-            if class_ids[i] == 64:  # Class ID for 'laptop'
-                found_items.append('Laptop')
-            elif class_ids[i] == 67:  # Class ID for 'cell phone'
-                found_items.append('Cell Phone')
-
-            # Draw bounding box
+            # Draw bounding box and label
             cv2.rectangle(image, (xmin, ymin), (xmax, ymax), (255, 0, 0), 2)
-            cv2.putText(image, f'{class_name} ({scores[i]:.2f})', 
-                        (xmin, ymin - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-    
-    # Print found items
-    if found_items:
-        print("Found:", ", ".join(set(found_items)))  # Print unique found items
-    else:
-        print("None")
+            label = f"{class_name}: {confidence:.2f}%"
+            cv2.putText(image, label, (xmin, ymin - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+            detected_items.append(class_name)
 
+    print("Detected items:", ", ".join(set(detected_items)))
     return image
 
-# Main function to execute the detection
-def main(image_path):
+# Main function for object detection
+def main(image_path, model, class_names, threshold=0.5, save_output=False):
+    # Load image
     image = load_image(image_path)
-    detector_output = detect_objects(image)
+    if image is None:
+        print("Error: Could not load image.")
+        return
 
-    # Extract data from detector output
-    boxes = detector_output["detection_boxes"].numpy()[0]  # Bounding boxes
-    class_ids = detector_output["detection_classes"].numpy()[0].astype(int)  # Class IDs
-    scores = detector_output["detection_scores"].numpy()[0]  # Confidence scores
+    # Detect objects
+    detection = detect_objects(model, image)
 
-    # Draw bounding boxes on the image
-    image_with_boxes = draw_boxes(image, boxes, class_ids, scores)
+    # Extract detection data
+    boxes = detection["detection_boxes"].numpy()[0]
+    class_ids = detection["detection_classes"].numpy()[0].astype(int)
+    scores = detection["detection_scores"].numpy()[0]
 
-    # Display the image
-    cv2.imshow('Object Detection', cv2.cvtColor(image_with_boxes, cv2.COLOR_RGB2BGR))
+    # Draw boxes on image
+    image_with_boxes = draw_boxes(image, boxes, class_ids, scores, class_names, threshold)
+
+    # Show and optionally save the output
+    cv2.imshow("Object Detection", cv2.cvtColor(image_with_boxes, cv2.COLOR_RGB2BGR))
+    if save_output:
+        cv2.imwrite("output_detected.jpg", cv2.cvtColor(image_with_boxes, cv2.COLOR_RGB2BGR))
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-# Call the main function with the path to your image
-image_path = "test-image2.jpg"  # Change this to your image path
-main(image_path)
+# Run detection with threshold and save option
+if __name__ == "__main__":
+    class_names = {
+        1: 'person', 2: 'bicycle', 3: 'car', 4: 'motorcycle', 64: 'laptop', 67: 'cell phone'
+    }
+    model = load_model()
+    if model:
+        image_path = "test-image2.jpg"  # Adjust image path as needed
+        main(image_path, model, class_names, threshold=0.5, save_output=True)
