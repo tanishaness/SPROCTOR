@@ -225,19 +225,25 @@
 │   ├── SQLFILE.sql
 │   ├── __pycache__/
 │   │   ├── audio.cpython-311.pyc
+│   │   ├── audio.cpython-312.pyc
 │   │   ├── detection.cpython-311.pyc
-│   │   └── head_pose.cpython-311.pyc
+│   │   ├── head_pose.cpython-311.pyc
+│   │   └── head_pose.cpython-312.pyc
 │   ├── audio.py
 │   ├── detection.py
 │   ├── face-rec.py
 │   ├── graph.py
 │   ├── head_pose.py
 │   ├── logic.xlsx
+│   ├── object_detection.py
 │   ├── peer_comparison_tool.py
 │   ├── processes.py
+│   ├── proctor_core.py
 │   ├── pyaudio_test.py
 │   ├── run.py
-│   └── screen_recorder.py
+│   ├── screen_recorder.py
+│   ├── test-image.jpg
+│   └── test-image2.jpg
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── GSSoC-Ext.png
@@ -260,6 +266,8 @@
 │   ├── contributor.css
 │   ├── contributor.html
 │   └── contributor.js
+├── frontend/
+│   └── index.html
 ├── heatmap_combined_20241009_144503.png
 ├── login.py
 ├── modle.png
