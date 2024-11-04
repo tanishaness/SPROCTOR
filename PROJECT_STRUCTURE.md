@@ -254,6 +254,7 @@
 ├── LICENSE
 ├── PROJECT_STRUCTURE.md
 ├── ReadMe.md
+├── SECURITY.md
 ├── Suggested-Issues.md
 ├── Userdb.sql
 ├── __pycache__/
