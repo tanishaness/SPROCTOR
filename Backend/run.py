@@ -1,5 +1,4 @@
 # Backend/run.py
-# adding to a new branch
 import threading as th
 import logging
 import os
@@ -107,6 +106,5 @@ def main():
         logger.info("Application shutdown complete")
 
 if __name__ == "__main__":
-    main()
 
-    
+    main()
