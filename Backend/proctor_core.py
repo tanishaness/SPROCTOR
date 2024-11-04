@@ -122,5 +122,3 @@ class ProctorCore:
             self.logger.info("Cleanup completed successfully")
         except Exception as e:
             self.logger.error(f"Error during cleanup: {str(e)}")
-
-            
