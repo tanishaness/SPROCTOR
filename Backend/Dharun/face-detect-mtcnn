@@ -1,0 +1,36 @@
+# Step 2: Face Detection with MTCNN
+import cv2
+from mtcnn import MTCNN
+
+# Initialize the MTCNN face detector
+detector = MTCNN()
+
+def detect_faces(frame):
+    # Detect faces in the frame
+    faces = detector.detect_faces(frame)
+    for face in faces:
+        # Extract bounding box coordinates
+        x, y, width, height = face['box']
+        # Draw bounding box around each detected face
+        cv2.rectangle(frame, (x, y), (x + width, y + height), (255, 0, 0), 2)
+    return frame
+
+def capture_video_with_face_detection():
+    cap = cv2.VideoCapture(0)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # Detect faces in the current frame
+        frame_with_faces = detect_faces(frame)
+        cv2.imshow('Face Detection', frame_with_faces)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+# Run face detection with video capture
+capture_video_with_face_detection()
