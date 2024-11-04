@@ -3,7 +3,7 @@ name: Issue Auto Comment
 # Created by @smog-root
 
 on:
-  issues:
+  issues:write
     types: [opened, closed]
 
 jobs:
