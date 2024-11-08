@@ -1,5 +1,4 @@
-# Backend/run.py
-# adding to a new branch
+
 import threading as th
 import logging
 import os

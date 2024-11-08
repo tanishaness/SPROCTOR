@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPROCTOR Tutorial & Help</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom smooth scroll and additional styling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .sidebar-link {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-link:hover {
+            transform: translateX(5px);
+            color: #3b82f6;
+        }
+
+        .content-section {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-blue-600">SPROCTOR</h1>
+            </div>
+            <div class="space-x-4">
+                <a href="#overview" class="text-gray-700 hover:text-blue-600 transition">Overview</a>
+                <a href="#getting-started" class="text-gray-700 hover:text-blue-600 transition">Getting Started</a>
+                <a href="#exam-process" class="text-gray-700 hover:text-blue-600 transition">Exam Process</a>
+                <a href="#faq" class="text-gray-700 hover:text-blue-600 transition">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 pt-24 flex">
+        <!-- Sidebar Navigation -->
+        <div class="w-1/4 pr-8 hidden md:block">
+            <div class="bg-white shadow-md rounded-lg p-6 sticky top-24">
+                <h3 class="text-xl font-semibold mb-4 text-blue-600">Tutorial Sections</h3>
+                <ul>
+                    <li class="mb-2"><a href="#overview" class="sidebar-link text-gray-700">Overview</a></li>
+                    <li class="mb-2"><a href="#getting-started" class="sidebar-link text-gray-700">Getting Started</a>
+                    </li>
+                    <li class="mb-2"><a href="#exam-process" class="sidebar-link text-gray-700">How to Run a Proctored
+                            Exam</a></li>
+                    <li class="mb-2"><a href="#cheat-detection" class="sidebar-link text-gray-700">Cheat Detection</a>
+                    </li>
+                    <li class="mb-2"><a href="#faq" class="sidebar-link text-gray-700">Frequently Asked Questions</a>
+                    </li>
+                    <li class="mb-2"><a href="#troubleshooting" class="sidebar-link text-gray-700">Troubleshooting</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Content Areas -->
+        <div class="w-full md:w-3/4">
+            <!-- Introduction -->
+            <section id="overview" class="content-section bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-3xl font-bold mb-4 text-blue-600">SPROCTOR Tutorial & Help</h2>
+                <p class="text-gray-700 mb-4">
+                    Welcome to the comprehensive guide for SPROCTOR, the cutting-edge AI-driven proctoring system
+                    designed to ensure academic integrity and fair examination processes. Whether you're an
+                    administrator, educator, or student, this tutorial will help you navigate and understand the
+                    powerful features of our intelligent proctoring solution.
+                </p>
+            </section>
+
+            <!-- Overview Section -->
+            <section id="overview-details" class="content-section bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-600">System Overview</h2>
+                <p class="text-gray-700 mb-4">
+                    SPROCTOR is an advanced AI-powered proctoring system that revolutionizes online exam monitoring.
+                    Utilizing machine learning and real-time video analysis, we provide comprehensive exam security
+                    without compromising student privacy or comfort.
+                </p>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>Real-time behavior monitoring</li>
+                    <li>Advanced cheat detection algorithms</li>
+                    <li>Seamless integration with existing learning platforms</li>
+                    <li>Minimal system requirements</li>
+                </ul>
+            </section>
+
+            <!-- Getting Started -->
+            <section id="getting-started" class="content-section bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-600">Getting Started</h2>
+                <ol class="list-decimal list-inside text-gray-700">
+                    <li>Download the SPROCTOR application from our official website</li>
+                    <li>Install the application following the on-screen instructions</li>
+                    <li>Create an administrator account</li>
+                    <li>Configure system settings and permissions</li>
+                    <li>Verify system compatibility with your devices</li>
+                </ol>
+            </section>
+
+            <!-- Exam Process -->
+            <section id="exam-process" class="content-section bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-600">Running a Proctored Exam</h2>
+                <p class="text-gray-700 mb-4">Follow these steps to conduct a secure online exam:</p>
+                <ol class="list-decimal list-inside text-gray-700">
+                    <li>Log in to your SPROCTOR administrator dashboard</li>
+                    <li>Select "Create New Exam"</li>
+                    <li>Configure exam parameters (time limit, allowed resources)</li>
+                    <li>Generate unique student access codes</li>
+                    <li>Monitor exam in real-time through the dashboard</li>
+                </ol>
+            </section>
+
+            <!-- Cheat Detection -->
+            <section id="cheat-detection" class="content-section bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-600">Understanding Cheat Detection</h2>
+                <p class="text-gray-700 mb-4">
+                    Our AI analyzes multiple behavioral indicators to identify potential academic dishonesty:
+                </p>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>Unusual head movements</li>
+                    <li>Multiple face detection attempts</li>
+                    <li>Background noise and movement</li>
+                    <li>Unexplained screen transitions</li>
+                    <li>Inconsistent typing patterns</li>
+                </ul>
+            </section>
+
+            <!-- FAQ -->
+            <section id="faq" class="content-section bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-600">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-700">Does SPROCTOR work offline?</h3>
+                        <p class="text-gray-600">No, a stable internet connection is required for real-time monitoring.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-700">What happens if a student looks away?</h3>
+                        <p class="text-gray-600">Prolonged absence from the camera view will trigger an alert and
+                            potential exam flag.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="content-section bg-white shadow-md rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-blue-600">Troubleshooting</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-700">Poor Video Quality</h3>
+                        <p class="text-gray-600">Ensure good lighting, clean webcam, and minimum 720p resolution.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-700">Detection Errors</h3>
+                        <p class="text-gray-600">Update to the latest software version and check system compatibility.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white py-8">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div>
+                <h4 class="text-xl font-bold">SPROCTOR</h4>
+                <p class="text-sm">© 2024 Academic Integrity Technologies</p>
+            </div>
+            <div class="space-x-4">
+                <a href="#" class="hover:underline">Contact Support</a>
+                <a href="#" class="hover:underline">Privacy Policy</a>
+                <a href="#" class="hover:underline">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
