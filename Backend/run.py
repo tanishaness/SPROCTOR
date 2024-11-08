@@ -1,4 +1,3 @@
-# Backend/run.py
 import threading as th
 import logging
 import os
@@ -106,5 +105,5 @@ def main():
         logger.info("Application shutdown complete")
 
 if __name__ == "__main__":
-
     main()
+

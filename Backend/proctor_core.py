@@ -1,4 +1,3 @@
-
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -12,6 +11,9 @@ from .head_pose import pose
 from .object_detection import detect_objects
 from .audio import process_audio
 from .screen_recorder import capture_screen
+from proctor_api import proctor_api
+
+app.register_blueprint(proctor_api, url_prefix='/api')
 
 class ProctorCore:
     def __init__(self):
