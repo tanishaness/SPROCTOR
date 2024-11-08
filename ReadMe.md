@@ -138,3 +138,9 @@ Whether you're a developer, educator, or simply curious about the project, we we
 ## :key: License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+<div align="center">
+    <a href="#top">
+        <img src="https://img.shields.io/badge/Back%20to%20Top-000000?style=for-the-badge&logo=github&logoColor=white" alt="Back to Top">
+    </a>
+</div>
