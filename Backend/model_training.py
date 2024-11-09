@@ -1,3 +1,5 @@
+# Backend/Offline-capabilities/model_training.py
+
 import torch
 import torch.nn as nn
 import torchvision
@@ -7,9 +9,19 @@ import cv2
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 import pandas as pd
+from pathlib import Path
+import os
 
 class ExamDataset(Dataset):
     def __init__(self, image_paths, annotations, transform=None):
+        """
+        Dataset class for exam monitoring images
+        
+        Args:
+            image_paths (list): List of paths to images
+            annotations (list): List of dictionaries containing boxes and labels
+            transform (callable, optional): Optional transform to be applied on images
+        """
         self.image_paths = image_paths
         self.annotations = annotations
         self.transform = transform
@@ -36,9 +48,31 @@ class ExamDataset(Dataset):
         
         return image, target
 
-class InvigilationSystem:
-    def __init__(self):
-        # Initialize FRCNN for student detection and behavior analysis
+class SPROCTORModelTrainer:
+    def __init__(self, data_dir=None, known_faces_path=None):
+        """
+        Initialize the SPROCTOR model trainer
+        
+        Args:
+            data_dir (str): Path to the dataset directory
+            known_faces_path (str): Path to known faces database
+        """
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.data_dir = Path(data_dir) if data_dir else Path('Backend/Dataset')
+        self.known_faces = self._load_known_faces(known_faces_path)
+        
+        # Initialize models
+        self.initialize_models()
+        
+    def _load_known_faces(self, known_faces_path):
+        """Load known faces database"""
+        if known_faces_path and os.path.exists(known_faces_path):
+            return pd.read_csv(known_faces_path)
+        return pd.DataFrame()  # Empty DataFrame if no database exists
+        
+    def initialize_models(self):
+        """Initialize FRCNN and Face Recognition models"""
+        # Initialize FRCNN for behavior detection
         self.frcnn = fasterrcnn_resnet50_fpn(pretrained=True)
         num_classes = 3  # background, cheating, not_cheating
         in_features = self.frcnn.roi_heads.box_predictor.cls_score.in_features
@@ -49,16 +83,86 @@ class InvigilationSystem:
         num_features = self.face_cnn.fc.in_features
         self.face_cnn.fc = nn.Linear(num_features, len(self.known_faces))
         
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        # Move models to device
         self.frcnn.to(self.device)
         self.face_cnn.to(self.device)
-
-    def train_models(self, train_loader, num_epochs=10):
-        # Training parameters
-        params = [p for p in self.frcnn.parameters() if p.requires_grad]
-        optimizer = torch.optim.SGD(params, lr=0.005, momentum=0.9, weight_decay=0.0005)
         
+    def prepare_data_loaders(self, train_ratio=0.8):
+        """Prepare train and validation data loaders"""
+        # Load and split dataset
+        image_paths = list(self.data_dir.glob('images/*.jpg'))
+        annotations_path = self.data_dir / 'annotations.json'
+        
+        if not annotations_path.exists():
+            raise FileNotFoundError(f"Annotations file not found at {annotations_path}")
+            
+        # Load annotations
+        import json
+        with open(annotations_path) as f:
+            annotations = json.load(f)
+            
+        # Split dataset
+        num_train = int(len(image_paths) * train_ratio)
+        train_paths = image_paths[:num_train]
+        train_annotations = annotations[:num_train]
+        val_paths = image_paths[num_train:]
+        val_annotations = annotations[num_train:]
+        
+        # Create transforms
+        transform = torchvision.transforms.Compose([
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize(
+                mean=[0.485, 0.456, 0.406],
+                std=[0.229, 0.224, 0.225]
+            )
+        ])
+        
+        # Create datasets
+        train_dataset = ExamDataset(train_paths, train_annotations, transform)
+        val_dataset = ExamDataset(val_paths, val_annotations, transform)
+        
+        # Create data loaders
+        train_loader = DataLoader(
+            train_dataset,
+            batch_size=2,
+            shuffle=True,
+            collate_fn=self.collate_fn
+        )
+        
+        val_loader = DataLoader(
+            val_dataset,
+            batch_size=2,
+            shuffle=False,
+            collate_fn=self.collate_fn
+        )
+        
+        return train_loader, val_loader
+        
+    @staticmethod
+    def collate_fn(batch):
+        """Custom collate function for data loader"""
+        images = []
+        targets = []
+        for image, target in batch:
+            images.append(image)
+            targets.append(target)
+        return images, targets
+        
+    def train_models(self, num_epochs=10, learning_rate=0.005):
+        """Train both FRCNN and Face Recognition models"""
+        # Prepare data loaders
+        train_loader, val_loader = self.prepare_data_loaders()
+        
+        # Optimizers
+        frcnn_params = [p for p in self.frcnn.parameters() if p.requires_grad]
+        face_params = [p for p in self.face_cnn.parameters() if p.requires_grad]
+        
+        frcnn_optimizer = torch.optim.SGD(frcnn_params, lr=learning_rate, momentum=0.9)
+        face_optimizer = torch.optim.Adam(face_params, lr=learning_rate)
+        
+        # Training loop
         for epoch in range(num_epochs):
+            # Train FRCNN
             self.frcnn.train()
             total_loss = 0
             
@@ -66,70 +170,47 @@ class InvigilationSystem:
                 images = [image.to(self.device) for image in images]
                 targets = [{k: v.to(self.device) for k, v in t.items()} for t in targets]
                 
+                frcnn_optimizer.zero_grad()
                 loss_dict = self.frcnn(images, targets)
                 losses = sum(loss for loss in loss_dict.values())
                 
-                optimizer.zero_grad()
                 losses.backward()
-                optimizer.step()
+                frcnn_optimizer.step()
                 
                 total_loss += losses.item()
-                
-            print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {total_loss/len(train_loader):.4f}")
-
-    def process_frame(self, frame):
-        self.frcnn.eval()
-        self.face_cnn.eval()
-        
-        # Transform frame
-        transform = torchvision.transforms.Compose([
-            torchvision.transforms.ToTensor(),
-            torchvision.transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-        ])
-        
-        frame_tensor = transform(frame).unsqueeze(0).to(self.device)
-        
-        with torch.no_grad():
-            predictions = self.frcnn(frame_tensor)
             
-        # Process predictions
-        boxes = predictions[0]['boxes'].cpu().numpy()
-        scores = predictions[0]['scores'].cpu().numpy()
-        labels = predictions[0]['labels'].cpu().numpy()
+            # Validate
+            self.frcnn.eval()
+            val_loss = 0
+            
+            with torch.no_grad():
+                for images, targets in val_loader:
+                    images = [image.to(self.device) for image in images]
+                    targets = [{k: v.to(self.device) for k, v in t.items()} for t in targets]
+                    
+                    loss_dict = self.frcnn(images, targets)
+                    losses = sum(loss for loss in loss_dict.values())
+                    val_loss += losses.item()
+            
+            print(f"Epoch [{epoch+1}/{num_epochs}]")
+            print(f"Training Loss: {total_loss/len(train_loader):.4f}")
+            print(f"Validation Loss: {val_loss/len(val_loader):.4f}")
+            
+    def save_models(self, frcnn_path='models/frcnn.pth', face_cnn_path='models/face_cnn.pth'):
+        """Save trained models"""
+        # Create models directory if it doesn't exist
+        os.makedirs('models', exist_ok=True)
         
-        results = []
-        for box, score, label in zip(boxes, scores, labels):
-            if score > 0.5:  # Confidence threshold
-                x1, y1, x2, y2 = box.astype(int)
-                face_crop = frame[y1:y2, x1:x2]
-                
-                # Face recognition
-                face_tensor = transform(face_crop).unsqueeze(0).to(self.device)
-                face_prediction = self.face_cnn(face_tensor)
-                student_id = torch.argmax(face_prediction).item()
-                
-                results.append({
-                    'box': box,
-                    'score': score,
-                    'is_cheating': label == 1,
-                    'student_id': student_id
-                })
-                
-        return results
-
-    def generate_report(self, results):
-        report_data = []
-        for result in results:
-            report_data.append({
-                'timestamp': pd.Timestamp.now(),
-                'student_id': result['student_id'],
-                'confidence': result['score'],
-                'behavior': 'Suspicious' if result['is_cheating'] else 'Normal'
-            })
+        # Save models
+        torch.save(self.frcnn.state_dict(), frcnn_path)
+        torch.save(self.face_cnn.state_dict(), face_cnn_path)
         
-        df = pd.DataFrame(report_data)
-        df.to_excel('invigilation_report.xlsx', index=False)
-        return df
+    def load_models(self, frcnn_path='models/frcnn.pth', face_cnn_path='models/face_cnn.pth'):
+        """Load trained models"""
+        if os.path.exists(frcnn_path):
+            self.frcnn.load_state_dict(torch.load(frcnn_path))
+        if os.path.exists(face_cnn_path):
+            self.face_cnn.load_state_dict(torch.load(face_cnn_path))
 
 class FastRCNNPredictor(nn.Module):
     def __init__(self, in_channels, num_classes):
