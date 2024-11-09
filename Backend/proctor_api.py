@@ -264,3 +264,4 @@ def not_found(e):
 @proctor_api.errorhandler(500)
 def internal_error(e):
     return jsonify({'error': 'Internal server error'}), 500
+
