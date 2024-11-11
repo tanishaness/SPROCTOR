@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /Backend/
+Disallow: /_pycache_/
+Disallow: /Dataset/
+Disallow: /contributor/
+Disallow: /GUI/
+
+# Sitemap
+Sitemap: https://your-domain.com/sitemap.xml
