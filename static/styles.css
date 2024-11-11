@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+#upload-form {
+    margin-top: 30px;
+}
+
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+}
